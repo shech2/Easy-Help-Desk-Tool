@@ -18,6 +18,7 @@ import {
 import Logo from '../common/Logo';
 import { useAppStore } from '../../store/appStore';
 import { useAuthStore } from '../../store/authStore';
+import React from 'react';
 
 const Sidebar = () => {
   const { sidebarCollapsed, toggleSidebar } = useAppStore();
@@ -42,8 +43,8 @@ const Sidebar = () => {
   );
   
   const sidebarVariants = {
-    expanded: { width: '16rem' },
-    collapsed: { width: '5rem' }
+    expanded: { width: '13rem' },
+    collapsed: { width: '9rem' }
   };
 
   return (

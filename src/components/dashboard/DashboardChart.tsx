@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface DashboardChartProps {
   title: string;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   FiCpu, 
@@ -33,7 +33,6 @@ import DashboardChart from '../components/dashboard/DashboardChart';
 import ServerStatus from '../components/dashboard/ServerStatus';
 import ActivityFeed from '../components/dashboard/ActivityFeed';
 import UserMonitor from '../components/monitoring/UserMonitor';
-import StatusBadge from '../components/common/StatusBadge';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -107,7 +106,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className='mr-48 bg-slate-800 rounded-lg shadow-lg'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

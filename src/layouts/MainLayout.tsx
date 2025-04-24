@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from '../components/navigation/Sidebar';
 import Header from '../components/navigation/Header';
@@ -19,9 +19,7 @@ const MainLayout = () => {
     <div className="min-h-screen bg-slate-900 flex">
       <Sidebar />
       
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${
-        sidebarCollapsed ? 'content-wrapper-collapsed' : 'content-wrapper'
-      }`}>
+      <div className='flex flex-1 flex-col transition-all duration-300'>
         <Header onToggleChat={() => setShowChat(!showChat)} />
         
         <main className="flex-1 p-6">

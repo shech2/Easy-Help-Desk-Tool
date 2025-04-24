@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { useAppStore } from '../../store/appStore';
+import React from 'react';
 
 interface HeaderProps {
   onToggleChat: () => void;
@@ -50,21 +51,52 @@ const Header = ({ onToggleChat }: HeaderProps) => {
   };
   
   return (
-    <header className="bg-slate-800 border-b border-slate-700 h-16 flex items-center px-6 shadow-md">
-      <div className="flex items-center w-1/3">
-        <div className="relative w-full max-w-md">
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <FiSearch className="text-slate-400" />
-          </div>
-          <input
-            type="text"
-            className="input pr-10 w-full text-right"
-            placeholder="חיפוש..."
-          />
-        </div>
-      </div>
-
-      <div className="flex items-center gap-4 mr-auto">
+    <header className="flex bg-slate-800 border-b border-slate-700 h-16 items-center px-6 shadow-md">
+      <div className="flex w-full gap-4 mr-48">
+          <button
+            className="flex items-center space-x-2 p-2 rounded-full hover:bg-slate-700"
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+          >
+            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
+              {user?.username?.charAt(0).toUpperCase() || 'מ'}
+            </div>
+            <span className="text-sm font-medium text-white hidden md:inline-block mr-2">
+              {user?.username || 'משתמש'}
+            </span>
+          </button>
+          
+          <AnimatePresence>
+            {showProfileMenu && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.2 }}
+                className="absolute right-15 mt-16 w-48 bg-slate-800 border border-slate-700 rounded-md shadow-lg z-50"
+              >
+                <div className="py-1">
+                  <button
+                    className="flex items-center w-full px-4 py-2 text-sm text-white hover:bg-slate-700 justify-end"
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      navigate('/settings');
+                    }}
+                  >
+                    <span>הגדרות</span>
+                    <FiSettings className="mr-3" />
+                  </button>
+                  
+                  <button
+                    className="flex items-center w-full px-4 py-2 text-sm text-white hover:bg-slate-700 justify-end"
+                    onClick={handleLogout}
+                  >
+                    <span>התנתק</span>
+                    <FiLogOut className="mr-3" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         <div className="flex items-center gap-2 text-slate-300 border-r border-slate-700 pl-4">
           <FiCalendar className="text-slate-400" />
           <span className="text-sm">{formatDate(currentTime)}</span>
@@ -93,54 +125,20 @@ const Header = ({ onToggleChat }: HeaderProps) => {
             </span>
           )}
         </button>
-        
-        <div className="relative">
-          <button
-            className="flex items-center space-x-2 p-2 rounded-full hover:bg-slate-700"
-            onClick={() => setShowProfileMenu(!showProfileMenu)}
-          >
-            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
-              {user?.username?.charAt(0).toUpperCase() || 'מ'}
-            </div>
-            <span className="text-sm font-medium text-white hidden md:inline-block mr-2">
-              {user?.username || 'משתמש'}
-            </span>
-          </button>
-          
-          <AnimatePresence>
-            {showProfileMenu && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2 }}
-                className="absolute left-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-md shadow-lg z-50"
-              >
-                <div className="py-1">
-                  <button
-                    className="flex items-center w-full px-4 py-2 text-sm text-white hover:bg-slate-700 justify-end"
-                    onClick={() => {
-                      setShowProfileMenu(false);
-                      navigate('/settings');
-                    }}
-                  >
-                    <span>הגדרות</span>
-                    <FiSettings className="ml-3" />
-                  </button>
-                  
-                  <button
-                    className="flex items-center w-full px-4 py-2 text-sm text-white hover:bg-slate-700 justify-end"
-                    onClick={handleLogout}
-                  >
-                    <span>התנתק</span>
-                    <FiLogOut className="ml-3" />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+      </div>
+      <div className="flex items-center w-full justify-end">
+        <div className="relative w-full max-w-md">
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <FiSearch className="text-slate-400" />
+          </div>
+          <input
+            type="text"
+            className="input pr-10 w-full text-right"
+            placeholder="חיפוש..."
+          />
         </div>
       </div>
+      
     </header>
   );
 };
